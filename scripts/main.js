@@ -110,3 +110,15 @@ function shipyard(palub = 4, zh, zb ) {
     while(!shipyard(1, getRandomInt(), getRandomInt()));
   }
 
+
+  let cels = document.querySelectorAll('td');
+  cels.forEach(cell => {
+    cell.addEventListener('click',(e)=>{
+    console.log(e);
+    cell.innerHTML=`<div class="hit">&#9773</div>`;
+    
+    })
+  });
+  
+
+  
