@@ -11,6 +11,24 @@ body{
   background-color: red;
 }
 
+.piu{
+  position: absolute;
+  top: 30px;
+  left: 30px;
+  height: 100px;
+  width: 180px;
+}
+
+.ships{
+  position: absolute;
+  top: 230px;
+  left: 30px;
+}
+
+.ships div div{
+  display:inline;
+}
+
 .hit{
   height: 100%;
   display: flex;
