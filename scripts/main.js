@@ -15,6 +15,7 @@ let table = document.querySelector("table");
 
 tableCreate();
 let table2 = document.querySelectorAll("table")[1];
+let wintitle= document.querySelector('.wintitle');
 
 function getRandomInt(max = 10) {
   return Math.floor(Math.random() * max);
@@ -168,6 +169,7 @@ cels.forEach((cell) => {
       cell.innerHTML = `<div class="hit">&#9773</div>`;
       console.log(cell.parentNode.rowIndex, cell.cellIndex);
       hit(cell.parentNode.rowIndex, cell.cellIndex, arrOfEnemyShips);
+      computer()
     },
     { once: true }
   );
@@ -175,7 +177,7 @@ cels.forEach((cell) => {
 
 function hit(y, x, arr) {
   arr.forEach((element) => {
-    for (let i = 0; i <= element.startPalub; i++) {
+    for (let i = 0; i < element.startPalub; i++) {
       let temp;
       if (element.r >= 5) {
         temp = element.x + i;
@@ -198,21 +200,50 @@ function hit(y, x, arr) {
           element.sayDead();
           if(arr==arrOfEnemyShips)
           table2.rows[event.path[1].rowIndex].cells[event.target.cellIndex].classList.add("ship");
-          else
-          table.rows[event.path[1].rowIndex].cells[event.target.cellIndex].classList.add("ship");
+
         } 
       }
     }
   });
-}
 
+// if(myonepalub.innerHTML + mytwopalub.innerHTML + mythreepalub.innerHTML+ myfourpalub.innerHTML == 0) alert('Я проиграл')
+
+if(enemonepalub.innerHTML + enemtwopalub.innerHTML + enemthreepalub.innerHTML + enemfourpalub.innerHTML == 0) {wintitle.innerHTML="Я победил!"}
+
+}
+let hits=[];
 let compButt = document.querySelector(".piu");
 compButt.addEventListener("click", computer);
 function computer() {
+
+
   let y = getRandomInt(),
     x = getRandomInt();
+    
+    if (hits[0]) {
+      if (
+        hits.some((element) => {
+          return element[0] == y && element[1] == x;
+        })
+      ) {
+        console.log("было");
+        computer();
+      } else {
+        console.log("новое значение", y, x);
+        hits.push([y, x]);
+      }
+    } else {
+      hits.push([y, x]);
+      console.log("push", y, x);
+    }
+
   table.rows[y].cells[x].innerHTML = `<div class="hit">&#9773</div>`;
   hit(y, x, arrOfShips);
+
+  if(myonepalub.innerHTML + mytwopalub.innerHTML + mythreepalub.innerHTML+ myfourpalub.innerHTML == 0) 
+  {
+    wintitle.innerHTML="Я победил!"
+  }
 }
 
 function enemyShipyard(palub, x, y, r) {
@@ -303,44 +334,44 @@ let enemfourpalub = document.querySelector(".enemfourpalub");
 function closeAround(x, y, r, palub, tablica) {
   if (r >= 5) {
     for (let i = 1; i <= palub; i++, x++) {
-      if (y + 1 < 10) tablica.rows[y + 1].cells[x].innerHTML = `<div class="hit">&#9773</div>`;
-      if (y - 1 >= 0) tablica.rows[y - 1].cells[x].innerHTML = `<div class="hit">&#9773</div>`;
+      if (y + 1 < 10) {tablica.rows[y + 1].cells[x].innerHTML = `<div class="hit">&#9773</div>`; hits.push([y,x])};
+      if (y - 1 >= 0) {tablica.rows[y - 1].cells[x].innerHTML = `<div class="hit">&#9773</div>`; hits.push([y,x])};
 
       if (i == 1) {
-        if (x - 1 >= 0) tablica.rows[y].cells[x - 1].innerHTML = `<div class="hit">&#9773</div>`;
-        if (y - 1 >= 0 && x - 1 >= 0)
-          tablica.rows[y - 1].cells[x - 1].innerHTML = `<div class="hit">&#9773</div>`;
+        if (x - 1 >= 0) {tablica.rows[y].cells[x - 1].innerHTML = `<div class="hit">&#9773</div>`; hits.push([y,x])};
+        if (y - 1 >= 0 && x - 1 >= 0){
+          tablica.rows[y - 1].cells[x - 1].innerHTML = `<div class="hit">&#9773</div>`; hits.push([y,x])};
         if (y + 1 < 10 && x - 1 >= 0)
-          tablica.rows[y + 1].cells[x - 1].innerHTML = `<div class="hit">&#9773</div>`;
+          {tablica.rows[y + 1].cells[x - 1].innerHTML = `<div class="hit">&#9773</div>`; hits.push([y,x])};
       }
       if (i == palub) {
-        if (x + 1 < 10) tablica.rows[y].cells[x + 1].innerHTML = `<div class="hit">&#9773</div>`;
+        if (x + 1 < 10){ tablica.rows[y].cells[x + 1].innerHTML = `<div class="hit">&#9773</div>`; hits.push([y,x])};
         if (y - 1 >= 0 && x + 1 < 10)
-          tablica.rows[y - 1].cells[x + 1].innerHTML = `<div class="hit">&#9773</div>`;
+          {tablica.rows[y - 1].cells[x + 1].innerHTML = `<div class="hit">&#9773</div>`; hits.push([y,x])};
         if (y + 1 < 10 && x + 1 < 10)
-          tablica.rows[y + 1].cells[x + 1].innerHTML = `<div class="hit">&#9773</div>`;
+          {tablica.rows[y + 1].cells[x + 1].innerHTML = `<div class="hit">&#9773</div>`; hits.push([y,x])};
       }
     }
   } else {
     for (let i = 1; i <= palub; i++, y++) {
       if (tablica.rows[y].cells[x - 1])
-        tablica.rows[y].cells[x - 1].innerHTML = `<div class="hit">&#9773</div>`;
+      {tablica.rows[y].cells[x - 1].innerHTML = `<div class="hit">&#9773</div>`; hits.push([y,x-1])};
       if (tablica.rows[y].cells[x + 1])
-        tablica.rows[y].cells[x + 1].innerHTML = `<div class="hit">&#9773</div>`;
+        {tablica.rows[y].cells[x + 1].innerHTML = `<div class="hit">&#9773</div>`; hits.push([y,x+1])};
 
       if (i == 1) {
-        if (y - 1 >= 0) tablica.rows[y - 1].cells[x].innerHTML = `<div class="hit">&#9773</div>`;
+        if (y - 1 >= 0){ tablica.rows[y - 1].cells[x].innerHTML = `<div class="hit">&#9773</div>`; hits.push([y-1,x])};
         if (y - 1 >= 0 && x - 1 >= 0)
-          tablica.rows[y - 1].cells[x - 1].innerHTML = `<div class="hit">&#9773</div>`;
+          {tablica.rows[y - 1].cells[x - 1].innerHTML = `<div class="hit">&#9773</div>`; hits.push([y-1,x-1])};
         if (y - 1 >= 0 && x + 1 < 10)
-          tablica.rows[y - 1].cells[x + 1].innerHTML = `<div class="hit">&#9773</div>`;
+          {tablica.rows[y - 1].cells[x + 1].innerHTML = `<div class="hit">&#9773</div>`; hits.push([y-1,x+1])};
       }
       if (i == palub) {
-        if (y + 1 < 10) tablica.rows[y + 1].cells[x].innerHTML = `<div class="hit">&#9773</div>`;
+        if (y + 1 < 10) {tablica.rows[y + 1].cells[x].innerHTML = `<div class="hit">&#9773</div>`; hits.push([y+1,x])};
         if (y + 1 < 10 && x - 1 >= 0)
-          tablica.rows[y + 1].cells[x - 1].innerHTML = `<div class="hit">&#9773</div>`;
+          {tablica.rows[y + 1].cells[x - 1].innerHTML = `<div class="hit">&#9773</div>`; hits.push([y+1,x-1])};
         if (y + 1 < 10 && x + 1 < 10)
-          tablica.rows[y + 1].cells[x + 1].innerHTML = `<div class="hit">&#9773</div>`;
+          {tablica.rows[y + 1].cells[x + 1].innerHTML = `<div class="hit">&#9773</div>`; hits.push([y+1,x+1])};
       }
     }
   }
@@ -421,3 +452,7 @@ for (let i = 1; i <= 10; i++) {
 //   }
 // }
 
+
+// setInterval(function() {
+//   computer();
+// }, 1000);

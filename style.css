@@ -12,10 +12,7 @@ body{
   background-color: rgba(0, 0, 0, 0.185);
 }
 
-.enemyClose{
-
-  
-}
+.enemyClose{}
 
 
 
@@ -59,4 +56,12 @@ td{
 }
 .enemyShip{
   /* background-color: red; */
+}
+
+.wintitle{
+  height: 300px;
+  position: absolute;
+  top: 700px;
+  left: 700px;
+  font-size: 80px;
 }
