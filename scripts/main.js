@@ -11,17 +11,17 @@ function tableCreate() {
   body.append(tbl);
 }
 tableCreate();
-let table = document.querySelector("table");
+let table = document.querySelectorAll("table")[1];
 
 tableCreate();
-let table2 = document.querySelectorAll("table")[1];
+let table2 = document.querySelectorAll("table")[2];
 let wintitle= document.querySelector('.wintitle');
 
 function getRandomInt(max = 10) {
   return Math.floor(Math.random() * max);
 }
 
-function shipyard(palub, x, y, r) {
+function shipyard(palub, x, y, r, table) {
   console.log("palub -", palub, "y -", y + 1, "x- ", x + 1);
 
   if (r >= 5) {
@@ -141,7 +141,7 @@ class Ship {
     }
   }
 }
-
+function autoPlace(){
 for (let i = 1; i <= 10; i++) {
   let y = getRandomInt(),
     x = getRandomInt(),
@@ -159,7 +159,8 @@ for (let i = 1; i <= 10; i++) {
     arrOfShips.push(new Ship(p, y, x, r));
   }
 }
-// console.log(arrOfShips);
+}
+
 
 let cels = table2.querySelectorAll("td");
 cels.forEach((cell) => {
@@ -206,7 +207,6 @@ function hit(y, x, arr) {
     }
   });
 
-// if(myonepalub.innerHTML + mytwopalub.innerHTML + mythreepalub.innerHTML+ myfourpalub.innerHTML == 0) alert('Я проиграл')
 
 if(enemonepalub.innerHTML + enemtwopalub.innerHTML + enemthreepalub.innerHTML + enemfourpalub.innerHTML == 0) {wintitle.innerHTML="Я победил!"}
 
@@ -433,26 +433,187 @@ for (let i = 1; i <= 10; i++) {
   }
 }
 
+let table3 = document.querySelectorAll("table")[0];
+let randomB = document.querySelector(".random");
+let manualB = document.querySelector(".manual");
+let rotate = document.querySelector(".rotate");
 
-// for (let i = 8; i <= 8; i++) {
-//   let y = 1,
-//     x = 1,
-//     r = 2,
-//     p;
+randomB.addEventListener("click",()=>{
+  clearTable(table);
+  autoPlace();
+})
 
-//   if (i == 1) p = 4;
-//   if (i == 2 || i == 3) p = 3;
-//   if (i == 4 || i == 5 || i == 6) p = 2;
-//   if (i == 7 || i == 8 || i == 9 || i == 10) p = 1;
+rotate.addEventListener('click',()=>{
+  clearTable(table3)
+  arrOfTableShip.forEach(element => {
+    if(element.selected)
+    element.rotate();
+    shipfortable(element.palub,element.y, element.x, element.r)
+  });
+  
+})
 
-//   if (!enemyShipyard(p, x, y, r, table)) {
-//     i--;
-//   } else {
-//     arrOfEnemyShips.push(new EnemyShip(p, y, x, r));
-//   }
-// }
+function clearTable(tablica){
+  if(tablica==table){
+    for(let i=0;i<10;i++){
+      for(let z=0;z<10;z++){
+        tablica.rows[i].cells[z].classList.remove("ship","close")
+      }
+      
+    }
+  }
+  else{
+    for(let i=0;i<5;i++){
+      for(let z=0;z<14;z++){
+        tablica.rows[z].cells[i].classList.remove("ship","selected")
+      }
+      
+    }
+  }
+}
 
 
-// setInterval(function() {
-//   computer();
-// }, 1000);
+function shipfortable(palub, y, x, r){
+
+  let temp;
+  arrOfTableShip.forEach(element => {
+      if(element.selected){
+        temp=true;
+      }
+      else{
+        temp=false;
+      }
+  });
+  if(temp){
+    if (r >= 5) {
+      //horizontal
+  
+      for (let i = 1; i <= palub; i++, x++) {
+        table3.rows[y].cells[x].classList.add("selected");
+      }
+    } else {
+      //vertical
+  
+      for (let i = 1; i <= palub; i++, y++) {
+        table3.rows[y].cells[x].classList.add("selected");
+  
+        }
+    }
+  }
+  else{
+  if (r >= 5) {
+    //horizontal
+
+    for (let i = 1; i <= palub; i++, x++) {
+      table3.rows[y].cells[x].classList.add("ship");
+    }
+  } else {
+    //vertical
+
+    for (let i = 1; i <= palub; i++, y++) {
+      table3.rows[y].cells[x].classList.add("ship");
+
+      }
+  }
+}
+}
+arrOfTableShip=[];
+class ShipTable{
+  constructor(palub, y, x, r){
+    this.palub=palub;
+    this.y=y;
+    this.x=x;
+    this.r=r;
+  }
+  rotate(){
+    if(this.r >=5){
+      this.r=3;
+    }
+    else{
+      this.r=8;
+    }
+  }
+}
+
+shipfortable(4,1,1,3);
+arrOfTableShip.push(new ShipTable(4,1,1,3));
+
+
+let pick = table3.querySelectorAll("td");
+pick.forEach((cell) => {
+  cell.addEventListener(
+    "click",
+    () => {
+
+      console.log(cell.parentNode.rowIndex, cell.cellIndex);
+      take(cell.parentNode.rowIndex, cell.cellIndex)
+    }
+  );
+});
+
+
+
+function take(y, x) {
+  arrOfTableShip.forEach((element) => {
+    for (let i = 0; i < element.palub; i++) {
+      let temp;
+      if (element.r >= 5) {
+        temp = element.x + i;
+      } else {
+        temp = element.y + i;
+      }
+      if (element.r >= 5) {
+        if (temp == x && element.y == y) {
+          console.log("yes,baby", element);
+
+            for(let z=element.palub;z >= element.x; z--){
+              table3.rows[y].cells[z].classList.add("selected");
+              element.selected = true;
+              }
+          
+        } 
+      } else {
+        if (element.x == x && temp == y) {
+          console.log("yes,baby", element);
+          for(let z=element.palub;z >= element.y; z--){
+            table3.rows[z].cells[x].classList.add("selected");
+            element.selected = true;
+            }
+        }
+      }
+    }
+  });
+}
+
+
+let celo = table.querySelectorAll("td");
+celo.forEach((cell) => {
+  cell.addEventListener(
+    "click",
+    () => {
+
+     
+            arrOfTableShip.forEach((element) =>{
+              
+        if(element.selected==true){
+          
+          shipyard(element.palub, event.target.cellIndex, event.path[1].rowIndex, element.r, table)
+         
+          // console.log(event.path[1].rowIndex)
+        }
+      })
+
+    },
+    { once: true }
+  );
+});
+
+// shipfortable(3,5,1,7);
+// shipfortable(3,1,1,7);
+// shipfortable(2,1,1,7);
+// shipfortable(2,1,1,7);
+// shipfortable(2,1,1,7);
+// shipfortable(1,12,4,7);
+// shipfortable(1,12,2,7);
+// shipfortable(1,13,3,7);
+// shipfortable(1,13,1,7);

@@ -6,6 +6,7 @@ body{
 
 .tablica{
   margin: 50px;
+  /* display: none; */
 }
 
 .close{
@@ -21,6 +22,7 @@ body{
 }
 
 .piu{
+  display: none;
   position: absolute;
   top: 30px;
   left: 30px;
@@ -30,8 +32,16 @@ body{
 
 .ships{
   position: absolute;
-  top: 230px;
-  left: 30px;
+  top: 630px;
+  left: 480px;
+}
+.enemships{
+  position: absolute;
+  top: 630px;
+  right: 380px;
+}
+.enemships div div{
+  display: inline;
 }
 
 .ships div div{
@@ -64,4 +74,38 @@ td{
   top: 700px;
   left: 700px;
   font-size: 80px;
+}
+
+.shipsTable{
+  position: absolute;
+  top: 15px;
+  left: 5px
+}
+
+.rotate{
+  position: absolute;
+  bottom: 15px;
+  left: 400px;
+  height: 80px;
+  width: 80px;
+  font-size: 70px;
+}
+
+.random{
+  position: absolute;
+  bottom: 30px;
+  left: 530px;
+  height: 60px;
+  width: 180px;
+}
+.manual{
+  position: absolute;
+  bottom: 30px;
+  left: 730px;
+  height: 60px;
+  width: 180px;
+}
+
+.selected{
+  background-color: blue;
 }
