@@ -535,8 +535,7 @@ class ShipTable{
   }
 }
 
-shipfortable(4,1,1,3);
-arrOfTableShip.push(new ShipTable(4,1,1,3));
+
 
 
 let pick = table3.querySelectorAll("td");
@@ -566,6 +565,7 @@ function take(y, x) {
         if (temp == x && element.y == y) {
           console.log("yes,baby", element);
 
+          
             for(let z=element.palub;z >= element.x; z--){
               table3.rows[y].cells[z].classList.add("selected");
               element.selected = true;
@@ -583,6 +583,8 @@ function take(y, x) {
       }
     }
   });
+
+  console.log(arrOfTableShip)
 }
 
 
@@ -590,7 +592,7 @@ let celo = table.querySelectorAll("td");
 celo.forEach((cell) => {
   cell.addEventListener(
     "click",
-    () => {
+    (event) => {
 
      
             arrOfTableShip.forEach((element) =>{
@@ -599,7 +601,7 @@ celo.forEach((cell) => {
           
           shipyard(element.palub, event.target.cellIndex, event.path[1].rowIndex, element.r, table)
          
-          // console.log(event.path[1].rowIndex)
+          
         }
       })
 
@@ -608,12 +610,19 @@ celo.forEach((cell) => {
   );
 });
 
-// shipfortable(3,5,1,7);
-// shipfortable(3,1,1,7);
-// shipfortable(2,1,1,7);
-// shipfortable(2,1,1,7);
-// shipfortable(2,1,1,7);
-// shipfortable(1,12,4,7);
-// shipfortable(1,12,2,7);
-// shipfortable(1,13,3,7);
-// shipfortable(1,13,1,7);
+function newShipTable(p,y,x,r){
+  shipfortable(p,y,x,r);
+  arrOfTableShip.push(new ShipTable(p,y,x,r));
+}
+newShipTable(4,1,1,3);
+
+newShipTable(3,6,0,4);
+newShipTable(3,6,3,4);
+newShipTable(2,10,4,4);
+newShipTable(2,10,2,4);
+newShipTable(2,10,0,4);
+newShipTable(1,13,4,7);
+newShipTable(1,13,1,7);
+newShipTable(1,14,5,7);
+newShipTable(1,14,0,7);
+
