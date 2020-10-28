@@ -253,7 +253,7 @@ function computer() {
       myfourpalub.innerHTML ==
     0
   ) {
-    wintitle.innerHTML = "Я победил!";
+    wintitle.innerHTML = "Компьютер победил!";
   }
 }
 
@@ -517,15 +517,33 @@ let randomB = document.querySelector(".random");
 let manualB = document.querySelector(".manual");
 let rotate = document.querySelector(".rotate");
 
+arrOfTableShip = [];
+
+let crutch=1;
+
 clearTable(table3);
-manualB.addEventListener("click", () => {
+prikol();
+function prikol(){
+  manualB.addEventListener("click", () => {
+  clearTable(table3);
   clearTable(table);
+ arrOfTableShip=[];
   manualPlace();
-});
+  crutch++;
+
+  console.log('manual',arrOfTableShip)
+},
+);
+}
+
 
 randomB.addEventListener("click", () => {
   clearTable(table);
+  clearTable(table3);
   autoPlace();
+
+  console.log('random',arrOfTableShip)
+
 });
 
 function clearTable(tablica) {
@@ -536,7 +554,7 @@ function clearTable(tablica) {
       }
     }
   } else {
-    for (let i = 0; i <= 5; i++) {
+    for (let i = 0; i <= 7; i++) {
       for (let z = 0; z <= 14; z++) {
         tablica.rows[z].cells[i].classList.remove("ship", "selected");
       }
@@ -545,6 +563,9 @@ function clearTable(tablica) {
 }
 
 function manualPlace() {
+
+
+
   rotate.addEventListener("click", () => {
     clearTable(table3);
     arrOfTableShip.forEach((element) => {
@@ -591,7 +612,7 @@ function manualPlace() {
       }
     }
   }
-  arrOfTableShip = [];
+
   class ShipTable {
     constructor(palub, y, x, r) {
       this.palub = palub;
@@ -607,14 +628,17 @@ function manualPlace() {
       }
     }
   }
-
+if(crutch == 1){
   let pick = table3.querySelectorAll("td");
   pick.forEach((cell) => {
+    
     cell.addEventListener("click", () => {
+      
       console.log(cell.parentNode.rowIndex, cell.cellIndex);
       take(cell.parentNode.rowIndex, cell.cellIndex);
     });
   });
+}
 
   function take(y, x) {
     if (
@@ -681,7 +705,7 @@ function manualPlace() {
               console.log("yes,baby", element);
 
               for (let z = element.palub + element.y - 1; z >= element.y; z--) {
-                table3.rows[y].cells[z].classList.toggle("selected");
+                table3.rows[z].cells[x].classList.toggle("selected");
               }
             }
           }
@@ -701,13 +725,13 @@ function manualPlace() {
       (event) => {
         arrOfTableShip.forEach((element) => {
           if (element.selected == true) {
-            shipyard(
+            if(shipyard(
               element.palub,
               event.target.cellIndex,
               event.path[1].rowIndex,
               element.r,
               table
-            );
+            )){
             element.x = null;
             element.y = null;
             element.palub = null;
@@ -715,7 +739,8 @@ function manualPlace() {
             clearTable(table3);
             arrOfTableShip.forEach((element) => {
               shipfortable(element.palub, element.y, element.x, element.r);
-            });
+            
+            });}
           }
         });
       },
@@ -728,14 +753,16 @@ function manualPlace() {
     arrOfTableShip.push(new ShipTable(p, y, x, r));
   }
 
-  newShipTable(4, 1, 1, 3);
-  newShipTable(3, 6, 0, 4);
-  newShipTable(3, 6, 3, 4);
-  newShipTable(2, 10, 4, 4);
-  newShipTable(2, 10, 2, 4);
-  newShipTable(2, 10, 0, 4);
-  newShipTable(1, 13, 4, 7);
-  newShipTable(1, 13, 1, 7);
-  newShipTable(1, 14, 5, 7);
-  newShipTable(1, 14, 0, 7);
+  newShipTable(4, 1, 2, 8);
+  newShipTable(3, 3, 1, 7);
+  newShipTable(3, 3, 5, 7);
+  newShipTable(2, 5, 0, 8);
+  newShipTable(2, 5, 3, 9);
+  newShipTable(2, 5, 6, 8);
+  newShipTable(1, 7, 2, 7);
+  newShipTable(1, 7, 5, 7);
+  newShipTable(1, 9, 2, 7);
+  newShipTable(1, 9, 5, 7);
+
+  console.log(arrOfTableShip)
 }

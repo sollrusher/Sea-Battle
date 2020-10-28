@@ -1,12 +1,15 @@
 body{
+  padding: 0 50px;
   display: flex;
   justify-content: center;
-
+  flex-wrap: wrap;
 }
 
+
+
 .tablica{
-  margin: 50px;
-  /* display: none; */
+  margin: 25px 0 0 450px;
+
 }
 
 .close{
@@ -29,13 +32,13 @@ body{
 
 .ships{
   position: absolute;
-  top: 630px;
-  left: 480px;
+  top: 400px;
+  left: 330px;
 }
 .enemships{
   position: absolute;
-  top: 630px;
-  right: 380px;
+  top: 520px;
+  left: 330px;
 }
 .enemships div div{
   display: inline;
@@ -57,8 +60,8 @@ body{
 
 
 td{
-  width: 50px;
-  height: 50px;
+  width: 40px;
+  height: 40px;
   border: solid 1px;
 }
 
@@ -73,13 +76,22 @@ td{
 .shipsTable{
   position: absolute;
   top: 15px;
-  left: 5px
+  left: 5px;
+  border: none;
 }
+.shipsTable td{
+  width: 30px;
+  height: 30px;
+border: none;
+}
+.shipsTable .ship{
+  border: solid 2px;
+  }
 
 .rotate{
   position: absolute;
-  bottom: 15px;
-  left: 400px;
+  bottom: 150px;
+  left: 120px;
   height: 80px;
   width: 80px;
   font-size: 70px;
@@ -88,14 +100,14 @@ td{
 .random{
   position: absolute;
   bottom: 30px;
-  left: 530px;
+  left: 50px;
   height: 60px;
   width: 180px;
 }
 .manual{
   position: absolute;
   bottom: 30px;
-  left: 730px;
+  left: 250px;
   height: 60px;
   width: 180px;
 }
